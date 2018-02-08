@@ -1,0 +1,5 @@
+test.yml
+*.tar.gz
+*.swp
+*.retry
+hosts

@@ -1,0 +1,9 @@
+systemd_dir: >-
+  {% if ansible_service_mgr in ['sysvinit', 'systemd'] -%}
+    {%- if ansible_distribution_file_variety == 'RedHat' -%}
+      /usr/lib/systemd/system
+    {%- elif ansible_distribution_file_variety == 'Debian' -%}
+      /lib/systemd/system
+    {%- else -%}
+    {%- endif %}
+  {%- endif %}

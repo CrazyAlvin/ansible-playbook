@@ -1,0 +1,16 @@
+---
+- name: Undeploy War
+  file:
+    path: "{{ tomcat_home }}/webapps/{{ item.name }}"
+    state: absent
+  with_items: "{{ wars }}"
+
+- name: Download War File
+  get_url:
+    url: "{{ item.get_url }}"
+    dest: "{{ tomcat_home }}/webapps/{{ item.name }}.war"
+    mode: 0644
+    force: yes
+    backup: yes
+  with_items: "{{ wars }}"
+  notify: restart tomcat{{ tomcat_version }}

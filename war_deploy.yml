@@ -1,0 +1,13 @@
+---
+- hosts: "{{ group }}"
+  become: yes
+  gather_facts: no 
+#  vars:
+#    group: test
+#    wars:
+#      - { 'name': 'test', 'get_url': 'http://172.16.100.191/docs/test.war' }
+
+  tasks:
+    - include_role:
+        name: tomcat
+        tasks_from: war

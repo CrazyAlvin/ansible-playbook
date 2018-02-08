@@ -1,0 +1,14 @@
+java_version: 8
+java_prefix: /usr/lib/jvm
+java_home: >- 
+  {% if java_version == 8 -%}
+    {{ java_prefix }}/jdk1.8.0_112
+  {%- elif java_version == 7 -%}
+    {{ java_prefix }}/jdk1.7.0_80
+  {%- endif %}
+java_get_url: >- 
+  {% if java_version == 8 -%}
+    jdk-8u112-linux-x64.tar.gz
+  {%- elif java_version == 7 -%}
+    jdk-7u80-linux-x64.tar.gz
+  {%- endif %}

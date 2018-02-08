@@ -1,0 +1,7 @@
+---
+- hosts: "{{ group }}"
+  become: yes
+
+  roles:
+    - java
+    - tomcat
