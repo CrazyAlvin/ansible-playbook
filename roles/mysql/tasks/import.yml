@@ -1,0 +1,33 @@
+---
+- name: Create Backup Dir
+  file:
+    path: "{{ mysql_dump_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Download database dump file
+  get_url:
+    url: "{{ mysql_dump_file_url }}"
+    dest: "{{ mysql_dump_dir }}/{{ mysql_dump_file }}"
+    mode: 0640
+  register: result
+
+#- name: Import Data
+#  shell: mysql -u{{ mysql_user }} -p{{ mysql_pass }} -h {{ mysql_host }} --port {{ mysql_port }} {{ mysql_db_name }} < {{ mysql_dump_dir }}/{{ mysql_dump_file }}
+#  when: result | changed
+
+- name: Import Data
+  mysql_db:
+    name: "{{ 'all' if (not mysql_db_name) else mysql_db_name }}"
+    state: import
+    target: "{{ mysql_dump_dir }}/{{ mysql_dump_file }}"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_pass }}"
+    login_host: "{{ mysql_host }}"
+    login_port: "{{ mysql_port }}"
+  when: result | changed
+
+- name: Delete database dump file
+  file:
+    path: "{{ mysql_dump_dir }}/{{ mysql_dump_file }}"
+    state: absent

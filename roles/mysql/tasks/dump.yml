@@ -1,0 +1,19 @@
+---
+- name: Create Backup Dir
+  file:
+    path: "{{ mysql_dump_dir }}"
+    state: directory
+    mode: 0755
+
+#- name: Dump Data
+#  shell: mysqldump -u{{ mysql_user }} -p{{ mysql_pass }} -h {{ mysql_host }} --port {{ mysql_port }} {{ '--all-databases' if (not mysql_db_name) else mysql_db_name }} > {{ mysql_dump_dir }}/{{ mysql_dump_file }}
+
+- name: Dump Data
+  mysql_db:
+    name: "{{ 'all' if (not mysql_db_name) else mysql_db_name }}"
+    state: dump
+    target: "{{ mysql_dump_dir }}/{{ mysql_dump_file }}"
+    login_user: "{{ mysql_user }}"
+    login_password: "{{ mysql_pass }}"
+    login_host: "{{ mysql_host }}"
+    login_port: "{{ mysql_port }}"

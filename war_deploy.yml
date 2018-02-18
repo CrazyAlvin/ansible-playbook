@@ -8,6 +8,6 @@
 #      - { 'name': 'test', 'get_url': 'http://172.16.100.191/docs/test.war' }
 
   tasks:
-    - include_role:
+    - import_role:
         name: tomcat
         tasks_from: war

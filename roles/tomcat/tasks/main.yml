@@ -2,7 +2,7 @@
 - name: add user {{ tomcat_user }}
   user:
     name: "{{ tomcat_user }}"
-    home: "{{ tomcat_home }}"
+#    home: "{{ tomcat_home }}"
     createhome: no
     state: present
 
