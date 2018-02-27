@@ -19,7 +19,7 @@
     dest: "{{ tomcat_home }}/conf/{{ item }}"
     owner: "{{ tomcat_user }}"
   with_items:
-    - server{{ tomcat_version }}.xml
+    - server.xml
     - tomcat-users.xml
   register: result
   notify: restart tomcat{{ tomcat_version }}
@@ -39,6 +39,21 @@
     dest: "{{ systemd_dir }}/tomcat{{ tomcat_version }}.service"
     mode: 0755
   when: systemd_dir != ''
+
+- name: Remove Sample files
+  file:
+    dest: "{{ tomcat_home  }}/webapps/{{ item }}"
+    state: absent
+  with_items:
+    - docs
+    - examples
+
+- name: Modify manager Access prem
+  template:
+    src: manager_context.xml
+    dest: "{{ tomcat_home }}/webapps/manager/META-INF/context.xml"
+    owner: "{{ tomcat_user }}"
+  notify: restart tomcat{{ tomcat_version }}
 
 - name: Reload Service List
   systemd: daemon_reload=yes
