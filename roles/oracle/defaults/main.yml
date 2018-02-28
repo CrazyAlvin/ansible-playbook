@@ -1,0 +1,8 @@
+oracle_user: 
+oracle_pass: 
+oracle_version:
+oracle_port:
+oracle_host: localhost
+oracle_sid:
+oracle_sql_file:
+oracle_sql_file_url:

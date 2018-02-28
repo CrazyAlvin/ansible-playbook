@@ -1,5 +1,5 @@
 tomcat_user: tomcat
-tomcat_prefix: /usr/share
+tomcat_prefix: /opt
 tomcat_version: 8
 tomcat_home: >-
   {% if tomcat_version == 8 -%}

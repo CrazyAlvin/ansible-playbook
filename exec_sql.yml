@@ -1,0 +1,10 @@
+---
+- hosts: "{{ group | default('localhost') }}"
+  become: yes
+  gather_facts: no 
+
+  roles:
+    - role: mysql
+      when: db_type == 'mysql'
+    - role: oracle
+      when: db_type == 'oracle'

@@ -1,0 +1,16 @@
+---
+- name: Download sql file
+  get_url:
+    url: "{{ oracle_sql_file_url }}"
+    dest: /tmp/{{ oracle_sql_file }}
+    mode: 0400
+  register: result
+
+- name: Import Data
+  shell: sqlplus {{ oracle_user }}/{{ oracle_pass }}@{{ oracle_host }}:{{ oracle_port }}/{{ oracle_sid }} @/tmp/{{ oracle_sql_file }}
+  when: result | changed
+
+- name: Delete sql file
+  file:
+    dest: /tmp/{{ oracle_sql_file }}
+    state: absent
