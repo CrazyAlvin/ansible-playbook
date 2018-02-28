@@ -1,0 +1,9 @@
+app_user: root
+app_prefix: /opt
+app_name: sample
+app_get_url: sample.tar.gz
+app_version:
+# [full] release or [delta] release
+app_release_mode: full
+app_exec_start:
+app_exec_stop:

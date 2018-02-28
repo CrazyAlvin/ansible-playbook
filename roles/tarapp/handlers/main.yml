@@ -1,0 +1,12 @@
+---
+- name: stop {{ app_name }}
+  shell: nohup {{ app_exec_stop }}
+  become_user: "{{ app_user }}"
+  args:
+    chdir: "{{ app_prefix }}/{{ app_name }}"
+
+- name: start {{ app_name }}
+  shell: nohup {{ app_exec_start }}
+  become_user: "{{ app_user }}"
+  args:
+    chdir: "{{ app_prefix }}/{{ app_name }}"

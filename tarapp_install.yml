@@ -1,0 +1,7 @@
+---
+- hosts: "{{ group }}"
+  become: yes
+  gather_facts: no
+
+  roles:
+    - tarapp
