@@ -7,3 +7,4 @@ mysql_db_name:
 mysql_dump_dir: /backup
 mysql_dump_file:
 mysql_dump_file_url:
+mysql_sql_mode: dump

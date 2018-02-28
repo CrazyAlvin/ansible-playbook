@@ -1,9 +1,0 @@
----
-- hosts: "{{ group | default('localhost') }}"
-  become: yes
-  gather_facts: no 
-
-  tasks:
-    - import_role:
-        name: mysql
-        tasks_from: dump

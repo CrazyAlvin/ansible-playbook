@@ -1,0 +1,5 @@
+- import_tasks: dump.yml
+  when: mysql_sql_mode == 'dump'
+
+- import_tasks: import.yml
+  when: mysql_sql_mode == 'import'
