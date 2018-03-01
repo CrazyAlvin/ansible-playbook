@@ -11,6 +11,7 @@ Environment=CATALINA_HOME={{ tomcat_home }}
 Environment=CATALINE_BASE={{ tomcat_home }}
 Environment='CATALINE_OPTS=-Xms128M -Xmx765M -server -XX:+UseParallelGC'
 Environment='JAVA_OPTS=-Djava.awt.haedless=true -Djava.security.egd=file:/dev/./urandom'
+WorkingDirectory={{ tomcat_home }}
 
 ExecStart={{ tomcat_home }}/bin/startup.sh
 
