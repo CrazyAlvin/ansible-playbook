@@ -1,0 +1,28 @@
+---
+- hosts: "{{ group|default('localhost') }}"
+  become: yes
+
+  vars:
+    script_name:
+    script_args: 
+    script_get_url:
+    exec_user: root
+
+  tasks:
+    - name: Download Script File
+      get_url:
+        url: "{{ script_get_url }}"
+        dest: /tmp/{{ script_name }}
+        mode: 0500
+        owner: "{{ exec_user }}"
+
+    - name: Exec Script On Remote Host
+      script: "{{ script_name }} {{ script_args }}"
+      args:
+        chdir: /tmp
+      become_user: "{{ exec_user }}"
+
+    - name: Remove temp Script File
+      file: 
+        dest: /tmp/{{ script_name }}
+        state: absent
