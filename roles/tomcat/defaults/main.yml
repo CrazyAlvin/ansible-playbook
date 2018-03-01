@@ -19,3 +19,8 @@ tomcat_https_port: 8443
 
 tomcat_admin_user: admin
 tomcat_admin_pass: admin123!@#
+
+# 过渡用，用于非Ansible安装的tomcat
+tomcat_exec_flag: False
+tomcat_exec_start: bin/startup.sh
+tomcat_exec_stop: bin/shutdown.sh

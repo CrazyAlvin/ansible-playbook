@@ -5,7 +5,7 @@
 #  vars:
 #    group: test
 #    wars:
-#      - { 'name': 'test', 'get_url': 'http://172.16.100.191/docs/test.war' }
+#      - { 'name': 's', 'get_url': 'http://172.16.100.191/docs/s.war' }
 
   tasks:
     - import_role:

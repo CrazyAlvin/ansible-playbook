@@ -22,7 +22,7 @@
     - server.xml
     - tomcat-users.xml
   register: result
-  notify: restart tomcat{{ tomcat_version }}
+  notify: restart tomcat
 
 # 仅当系统服务管理版本为service时使用
 - name: Install init script
@@ -53,7 +53,7 @@
     src: manager_context.xml
     dest: "{{ tomcat_home }}/webapps/manager/META-INF/context.xml"
     owner: "{{ tomcat_user }}"
-  notify: restart tomcat{{ tomcat_version }}
+  notify: restart tomcat
 
 - name: Reload Service List
   systemd: daemon_reload=yes

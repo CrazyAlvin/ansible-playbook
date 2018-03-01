@@ -15,4 +15,4 @@
     force: yes
     backup: yes
   with_items: "{{ wars }}"
-  notify: restart tomcat{{ tomcat_version }}
+  notify: restart tomcat

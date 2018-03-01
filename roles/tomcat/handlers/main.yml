@@ -1,3 +1,22 @@
 ---
-- name: restart tomcat{{ tomcat_version }}
+- name: Restart Tomcat
   service: name=tomcat{{ tomcat_version }} state=restarted
+  listen: restart tomcat
+  when: not tomcat_exec_flag
+
+# 过渡用，用于非Ansible安装的tomcat
+- name: Stop Tomcat
+  shell: nohup {{ tomcat_exec_stop }}
+  become_user: "{{ tomcat_user }}"
+  args:
+    chdir: "{{ tomcat_home }}"
+  listen: restart tomcat
+  when: tomcat_exec_flag
+
+- name: Start Tomcat
+  shell: nohup {{ tomcat_exec_start }}
+  become_user: "{{ tomcat_user }}"
+  args:
+    chdir: "{{ tomcat_home }}"
+  listen: restart tomcat
+  when: tomcat_exec_flag
