@@ -1,6 +1,7 @@
 app_user: root
 app_prefix: /opt
 app_name: sample
+app_home: "{{ app_prefix }}/{{ app_name }}"
 app_get_url: sample.tar.gz
 app_version:
 # [full] release or [delta] release

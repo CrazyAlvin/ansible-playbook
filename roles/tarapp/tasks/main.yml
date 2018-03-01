@@ -1,30 +1,30 @@
 ---
 - stat: 
-    path: "{{ app_prefix }}/{{ app_name }}"
+    path: "{{ app_home }}"
   register: stat_app
 
 - name: Stop {{ app_name }}
   shell: nohup {{ app_exec_stop }}
   become_user: "{{ app_user }}"
   args:
-    chdir: "{{ app_prefix }}/{{ app_name }}"
+    chdir: "{{ app_home }}"
   when: stat_app.stat.isdir is defined and stat_app.stat.isdir
 
-- name: Remove previous {{ app_name }}
+- name: Remove previous {{ app_home }}
   file:
-    path: "{{ app_prefix }}/{{ app_name }}-pre"
+    path: "{{ app_home }}-pre"
     state: absent
 
-- name: Backup {{ app_name }}
-  command: mv {{ app_name }} {{ app_name }}-pre
+- name: Backup {{ app_home }}
+  command: mv {{ app_home }} {{ app_home }}-pre
   args: 
     chdir: "{{ app_prefix }}"
   when: 
     - app_release_mode == 'full'
     - stat_app.stat.isdir is defined and stat_app.stat.isdir
 
-- name: Backup {{ app_name }}
-  command: cp -a {{ app_name }} {{ app_name }}-pre
+- name: Backup {{ app_home }}
+  command: cp -a {{ app_home }} {{ app_home }}-pre
   args: 
     chdir: "{{ app_prefix }}"
   when:
@@ -41,4 +41,4 @@
   shell: nohup {{ app_exec_start }}
   become_user: "{{ app_user }}"
   args:
-    chdir: "{{ app_prefix }}/{{ app_name }}"
+    chdir: "{{ app_home }}"
