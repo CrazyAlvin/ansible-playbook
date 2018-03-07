@@ -1,4 +1,4 @@
-test.yml
+test.*
 *.tar.gz
 *.swp
 *.retry
