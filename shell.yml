@@ -9,20 +9,24 @@
     exec_user: root
 
   tasks:
+    - name: Touch A Temp File
+      command: mktemp -u
+      register: temp_file
+
     - name: Download Script File
       get_url:
         url: "{{ script_get_url }}"
-        dest: /tmp/{{ script_name }}
+        dest: "{{ temp_file.stdout }}"
         mode: 0500
         owner: "{{ exec_user }}"
 
     - name: Exec Script On Remote Host
-      script: "{{ script_name }} {{ script_args }}"
+      shell: "{{ temp_file.stdout }} {{ script_args }}"
       args:
         chdir: /tmp
       become_user: "{{ exec_user }}"
 
     - name: Remove temp Script File
       file: 
-        dest: /tmp/{{ script_name }}
+        dest: "{{ temp_file.stdout }}"
         state: absent
