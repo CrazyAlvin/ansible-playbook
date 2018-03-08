@@ -2,6 +2,7 @@
 - hosts: "{{ group }}"
   become: yes
 
-  roles:
-    - java
-    - tomcat
+  tasks:
+    - import_role:
+        name: tomcat
+        tasks_from: install

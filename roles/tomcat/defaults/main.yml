@@ -24,3 +24,7 @@ tomcat_admin_pass: admin123!@#
 tomcat_exec_flag: False
 tomcat_exec_start: bin/startup.sh
 tomcat_exec_stop: bin/shutdown.sh
+
+# 可选是否安装java，默认安装
+java_install_flag: True
+java_home:

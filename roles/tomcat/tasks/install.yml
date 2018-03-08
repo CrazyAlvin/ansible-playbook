@@ -1,0 +1,73 @@
+---
+- name: add user {{ tomcat_user }}
+  user:
+    name: "{{ tomcat_user }}"
+#    home: "{{ tomcat_home }}"
+    createhome: no
+    state: present
+
+- name: Extract archive
+  unarchive:
+    src: "{{ tomcat_get_url }}"
+    dest: "{{ tomcat_prefix }}"
+    owner: "{{ tomcat_user }}"
+    creates: "{{ tomcat_home }}"
+
+- name: Chown for catalina_home
+  file:
+    name: "{{ tomcat_home }}"
+    owner: "{{ tomcat_user }}"
+
+- name: Configure Tomcat
+  template:
+    src: "{{ item }}"
+    dest: "{{ tomcat_home }}/conf/{{ item }}"
+    owner: "{{ tomcat_user }}"
+  with_items:
+    - server.xml
+    - tomcat-users.xml
+  register: result
+  notify: restart tomcat
+
+# 仅当系统服务管理版本为service时使用
+- name: Install init script
+  template:
+    src: init_service.j2
+    dest: /etc/init.d/tomcat{{ tomcat_version }}
+    mode: 0755
+  when: systemd_dir == ''
+
+# 仅当系统服务管理版本为systemd时使用
+- name: Install systemd script
+  template:
+    src: systemd_service.j2
+    dest: "{{ systemd_dir }}/tomcat{{ tomcat_version }}.service"
+    mode: 0644
+  when: systemd_dir != ''
+
+- name: Remove Sample files
+  file:
+    dest: "{{ tomcat_home  }}/webapps/{{ item }}"
+    state: absent
+  with_items:
+    - docs
+    - examples
+
+- name: Modify manager Access prem
+  template:
+    src: manager_context.xml
+    dest: "{{ tomcat_home }}/webapps/manager/META-INF/context.xml"
+    owner: "{{ tomcat_user }}"
+  notify: restart tomcat
+
+- name: Reload Service List
+  systemd: daemon_reload=yes
+  when: systemd_dir != ''
+
+- name: Start Tomcat
+  service: name=tomcat{{ tomcat_version }} state=started enabled=yes
+
+- name: wait for tomcat to start
+  wait_for:
+    port: '{{ tomcat_http_port }}'
+    timeout: 30

@@ -15,8 +15,7 @@
 #
  
 #Location of JAVA_HOME (bin files)
-JAVA_HOME="{{ java_home }}"
-export JAVA_HOME=${JAVA_HOME:=/usr/lib/jvm/jre/}
+export JAVA_HOME="{{ java_home|default('') }}"
  
 #Add Java binary files to PATH
 export PATH=$JAVA_HOME/bin:$PATH

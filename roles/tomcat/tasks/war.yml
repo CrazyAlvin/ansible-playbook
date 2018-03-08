@@ -12,7 +12,8 @@
     url: "{{ item.get_url }}"
     dest: "{{ tomcat_home }}/webapps/{{ item.name }}.war"
     mode: 0644
-    force: yes
-    backup: yes
+#    force: yes
+#    backup: yes
+  become: "{{ tomcat_user }}"
   with_items: "{{ wars }}"
   notify: restart tomcat
