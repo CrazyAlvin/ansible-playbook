@@ -1,4 +1,4 @@
-{% if tomcat_version == 8 %}
+{% if tomcat_version | string == '8' %}
 <?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
@@ -141,7 +141,7 @@
     </Engine>
   </Service>
 </Server>
-{% elif tomcat_version == 7 %}
+{% elif tomcat_version | string == '7' %}
 <?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more

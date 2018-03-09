@@ -15,12 +15,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-{% if tomcat_version == 8 %}
+{% if tomcat_version | string == '8' %}
 <tomcat-users xmlns="http://tomcat.apache.org/xml"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
               version="1.0">
-{% elif tomcat_version == 7 %}
+{% elif tomcat_version | string == '7' %}
 <tomcat-users>
 {% endif %}
 <!--

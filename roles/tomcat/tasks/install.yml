@@ -1,4 +1,8 @@
 ---
+- name: Reset JAVA_HOME when use custom jdk
+  set_fact: java_home={{ tomcat_java_home }}
+  when: not java_install_flag
+
 - name: add user {{ tomcat_user }}
   user:
     name: "{{ tomcat_user }}"
