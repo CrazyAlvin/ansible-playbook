@@ -3,9 +3,8 @@
   become: yes
 
   vars:
-    script_name:
-    script_args: 
     script_get_url:
+    script_args: 
     exec_user: root
 
   tasks:
@@ -21,10 +20,11 @@
         owner: "{{ exec_user }}"
 
     - name: Exec Script On Remote Host
-      shell: "{{ temp_file.stdout }} {{ script_args }}"
+      shell: nohup {{ temp_file.stdout }} {{ script_args }}
       args:
         chdir: /tmp
       become_user: "{{ exec_user }}"
+      ignore_errors: True
 
     - name: Remove temp Script File
       file: 

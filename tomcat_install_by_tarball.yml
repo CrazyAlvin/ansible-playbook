@@ -3,6 +3,6 @@
   become: yes
 
   tasks:
-    - import_role:
+    - include_role:
         name: tomcat
         tasks_from: install

@@ -1,5 +1,2 @@
-- import_tasks: dump.yml
-  when: mysql_sql_mode == 'dump'
-
-- import_tasks: import.yml
-  when: mysql_sql_mode == 'import'
+#- import_tasks: "{{ mysql_sql_mode }}.yml"
+- include: "{{ mysql_sql_mode }}.yml"
