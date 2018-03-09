@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ group }}"
+- hosts: "{{ target }}"
   become: yes
 
   tasks:

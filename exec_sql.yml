@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ group | default('localhost') }}"
+- hosts: "{{ target | default('localhost') }}"
   become: yes
   gather_facts: no 
 
