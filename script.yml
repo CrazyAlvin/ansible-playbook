@@ -1,0 +1,38 @@
+---
+- hosts: "{{ hosts }}"
+  become: yes
+
+  vars:
+    get_url:          ## 脚本下载链接
+    args:             ## 脚本携带的参数
+    owner: root       ## 执行该脚本的用户名
+    url_user:         ## 下载链接认证用户名
+    url_pass:         ## 下载链接认证密码
+
+  tasks:
+    - name: Touch A Temp File
+      command: mktemp -u
+      register: temp_file
+
+    - name: Download Script File
+      get_url:
+        url: "{{ get_url }}"
+        dest: "{{ temp_file.stdout }}"
+        url_username: "{{ url_user }}"
+        url_password: "{{ url_pass }}"
+        mode: 0500
+        owner: "{{ owner }}"
+        force: yes
+        validate_certs: no
+
+    - name: Exec Script On Remote Host
+      shell: nohup {{ temp_file.stdout }} {{ args }}
+      args:
+        chdir: /tmp
+      become_user: "{{ owner }}"
+      ignore_errors: True
+
+    - name: Remove temp Script File
+      file: 
+        dest: "{{ temp_file.stdout }}"
+        state: absent

@@ -1,0 +1,10 @@
+hosts: localhost
+files:
+  - get_url: file:///tmp/a
+    dest: /tmp/b
+    owner: alvin
+    group: alvin
+    mode: '0755'
+  - get_url: file:///tmp/a
+    dest: /tmp/c
+    force: yes

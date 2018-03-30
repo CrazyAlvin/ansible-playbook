@@ -1,0 +1,16 @@
+---
+- hosts: "{{ hosts }}"
+  become: yes
+  gather_facts: no
+
+  vars:
+    cmd:
+    exec_dir: /tmp
+    exec_user: root
+
+  tasks:
+    - name: Exec Command {{ cmd }}
+      command: "{{ cmd }}"
+      args:
+        chdir: "{{ exec_dir }}"
+      become_user: "{{ exec_user }}"

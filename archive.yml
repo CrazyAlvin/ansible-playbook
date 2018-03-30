@@ -1,0 +1,35 @@
+---
+- hosts: "{{ hosts }}"
+  become: yes
+  gather_facts: no
+  
+  vars: 
+    ## 全局设置，如果files变量未设置，则使用以下设置
+    owner: root
+    group: root
+    arch_type: module
+    files:
+#      - path:             ## 待打包文件路径
+#        dest:             ## 打包文件保存路径（包含文件名）
+#        owner:            ## 文件拥有者
+#        group:            ## 文件属组
+#        arch_type:        ## 打包方式（module/raw），module方式会忽略0字节的空文件
+#        extra_args:       ## 使用raw模式时可以添加 tar 命令支持的额外参数如 --exclude 等
+  
+  tasks:
+    - name: Archive specified folder
+      archive:
+        path: "{{ item.path }}"
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner if item.owner is defined and item.owner else owner }}"
+        group: "{{ item.group if item.group is defined and item.group else group }}"
+      with_items: "{{ files }}"
+      when: arch_type == 'module'
+
+    - name: Archive specified folder
+      shell: tar -zcf {{ item.dest }} ../$(basename {{ item.path }}) {{ item.extra_args|default('') }}
+      args:
+        chdir: "{{ item.path }}"
+      become_user: "{{ item.owner if item.owner is defined and item.owner else owner }}"
+      with_items: "{{ files }}"
+      when: arch_type == 'raw'

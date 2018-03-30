@@ -1,0 +1,42 @@
+---
+- hosts: "{{ hosts }}"
+  become: yes
+  gather_facts: no
+  
+  vars: 
+    files:
+      - src: test.tar.gz         ## 压缩包文件路径
+        dest: /tmp        ## 待解压目录
+        rm_path:          ## 需要事先删除的目录
+        create_path:      ## 需要创建的目录
+        owner:            ## 文件拥有者
+        group:            ## 文件属组
+    ## 全局设置，如果files未设置，则使用以下设置
+    owner: root
+    group: root
+  
+  tasks:
+    - name: Remove specified folder
+      file:
+        path: "{{ item.rm_path }}"
+        state: absent
+      when: item.rm_path
+
+    - name: Create specified folder
+      file:
+        path: "{{ item.create_path }}"
+        owner: "{{ item.owner if item.owner else owner }}"
+        group: "{{ item.group if item.group else group }}"
+        recurse: yes
+        state: directory
+      when: item.create_path
+
+    - name: Unarchive {{ item.path }} to {{ item.dest }}
+      unarchive:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner if item.owner else owner }}"
+        group: "{{ item.group if item.group else group }}"
+
+## 待完成
+    with_items: "{{ files }}"
