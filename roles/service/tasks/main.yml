@@ -1,0 +1,5 @@
+---
+- include: "{{ task_file }}"
+  vars:
+    task_file: "{{ 'win_service.yml' if ansible_os_family == 'Windows' else 'service.yml' }}"
+  become: "{{ 'no' if ansible_os_family == 'Windows' else 'yes' }}"

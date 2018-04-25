@@ -1,18 +1,7 @@
 ---
 - hosts: "{{ hosts }}"
-  become: yes
-  gather_facts: no
+  become: no
+  gather_facts: yes
 
-  vars:
-    owner: root
-    cmd:
-      name:       ## 待执行命令【命令 + 参数】
-      path:       ## 执行目录
-      owner:      ## 执行用户
-
-  tasks:
-    - name: Exec Command {{ cmd.name }}
-      shell: "{{ cmd.name }}"
-      args:
-        chdir: "{{ cmd.path }}"
-      become_user: "{{ cmd.owner if cmd.owner is defined and cmd.owner else owner }}"
+  roles:
+    - command

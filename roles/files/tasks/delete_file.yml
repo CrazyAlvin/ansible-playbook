@@ -1,0 +1,6 @@
+---
+- name: Remove "{{ file.path }}"
+  file:
+    path: "{{ file.path if file.path != '/' else None }}"
+    state: absent
+  become: "{{ 'yes' if file.become is defined and ( file.become == 'yes' or file.become == True ) else 'no' }}"

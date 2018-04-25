@@ -1,0 +1,7 @@
+---
+- name: Exec Command {{ cmd.name }}
+  shell: "{{ cmd.name }}"
+  args:
+    chdir: "{{ cmd.path if cmd.path is defined and cmd.path else None }}"
+    executable: "{{ cmd.executable if cmd.executable is defined and cmd.executable else 'cmd' }}"
+  become_user: "{{ cmd.owner if cmd.owner is defined and cmd.owner else owner }}"

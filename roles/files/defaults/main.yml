@@ -1,0 +1,8 @@
+owner: root
+group: root
+#file:
+#  path:        ## 创建或删除的文件路径
+#  action:      ## 执行动作
+#  owner:       ## 文件所属用户
+#  group:       ## 文件所属组
+#  become:      ## 是否使用root用户执行

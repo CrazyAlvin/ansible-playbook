@@ -1,0 +1,3 @@
+---
+- name: "{{ service.action }} {{ service.name }}"
+  service: name={{ service.name }} state={{ service.action }}

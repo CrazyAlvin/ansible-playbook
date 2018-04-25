@@ -4,4 +4,4 @@
   gather_facts: yes
 
   roles:
-    - service
+    - files

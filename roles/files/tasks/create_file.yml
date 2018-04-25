@@ -1,0 +1,9 @@
+---
+- name: Create "{{ file.path }}"
+  file:
+    path: "{{ file.path }}"
+    owner: "{{ file.owner if file.owner is defined and file.owner else owner }}"
+    group: "{{ file.group if file.group is defined and file.owner else group }}"
+    recurse: yes
+    state: directory
+  become: yes

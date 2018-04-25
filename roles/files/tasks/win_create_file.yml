@@ -1,0 +1,5 @@
+---
+- name: Create "{{ file.path }}"
+  win_file:
+    path: "{{ file.path }}"
+    state: directory

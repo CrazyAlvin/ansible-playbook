@@ -1,0 +1,7 @@
+---
+- name: Unarchive {{ unarch.src }} to {{ unarch.dest }}
+  unarchive:
+    src: "{{ unarch.src }}"
+    dest: "{{ unarch.dest }}"
+    owner: "{{ unarch.owner if unarch.owner is defined and unarch.owner else owner }}"
+    group: "{{ unarch.group if unarch.group is defined and unarch.owner else group }}"

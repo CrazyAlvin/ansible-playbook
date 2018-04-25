@@ -1,0 +1,4 @@
+---
+- include: "{{ task_file }}"
+  vars:
+    task_file: "{{ 'win_' if ansible_os_family == 'Windows' else None }}{{ 'delete_file.yml' if file.action == 'delete' else 'create_file.yml' }}"

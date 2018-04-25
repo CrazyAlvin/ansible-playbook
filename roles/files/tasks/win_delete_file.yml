@@ -1,0 +1,5 @@
+---
+- name: Remove "{{ file.path }}"
+  win_file:
+    path: "{{ file.path }}"
+    state: absent
