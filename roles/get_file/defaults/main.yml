@@ -1,0 +1,20 @@
+owner: root
+group: root
+#git_url: http://{{ ip }}:{{ port }}/api/v4/projects/
+#git_branch: master
+#files:
+#  name:           ## 文件名
+#  get_url:        ## 文件获取路径
+#  dest:           ## 文件保存路径
+#  url_user:       ## 下载链接认证用户名
+#  url_pass:       ## 下载链接认证密码
+#  owner:          ## 文件拥有者
+#  group:          ## 文件属组
+#  mode:           ## 文件权限
+#  force:          ## 是否强制覆盖（yes/no）
+#  type:       ## gitlab 或者其他值
+
+#  project_id:     ## 项目ID，可在gitlab项目设置中查看
+#  branch:         ## gitlab分支
+#  file_path:      ## gitlab项目文件路径，路径分隔符需转换为 %2F
+#  token:          ## gitlab用户的private_token，需在用户设置中创建

@@ -1,0 +1,15 @@
+---
+- hosts: "{{ hosts }}"
+  become: no
+  gather_facts: yes
+
+  vars:
+    owner: root
+    service:
+      name:       ## 服务名
+      action:     ## 待执行的动作【started|stoped|restarted|reloaded】
+
+  tasks:
+    - name: "{{ service.action }} {{ service.name }}"
+      service: name={{ service.name }} state={{ service.action }}
+      become: "{{ 'no' if ansible_os_family == 'Windows' else 'yes' }}"

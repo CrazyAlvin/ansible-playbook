@@ -1,0 +1,26 @@
+---
+- name: Exec Script
+  block:
+    - name: Touch A Temp File
+      win_tempfile:
+        state: file
+        suffix: ".{{ script.type if script.type is defined and script.type else 'bat' }}"
+      register: temp_file
+
+    - name: Download Script File
+      win_get_url:
+        url: "{{ script.get_url }}"
+        dest: "{{ temp_file.path }}"
+        url_username: "{{ script.url_user|default('') }}"
+        url_password: "{{ script.url_pass|default('') }}"
+        force: yes
+        skip_certificate_validation: yes
+
+    - name: Exec Script On Remote Host
+      win_shell: "{{ temp_file.path }} {{ script.args|default('') }}"
+
+  always:
+    - name: Remove {{ temp_file.path }}
+      win_file: 
+        dest: "{{ temp_file.path }}"
+        state: absent

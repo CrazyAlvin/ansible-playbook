@@ -1,0 +1,29 @@
+---
+- name: Get dest directory
+  shell: echo $(dirname {{ files.dest }})
+  register: dest_path
+
+- name: Check dest directory exists
+  stat: 
+    path: "{{ dest_path.stdout }}"
+  register: dest_path_status
+
+- name: Create {{ dest_path.stdout }}
+  file:
+    dest: "{{ dest_path.stdout }}"
+    owner: "{{ files.owner if files.owner is defined and files.owner else owner }}"
+    group: "{{ files.group if files.group is defined and files.group else group }}"
+    state: directory
+  when: dest_path_status.stat.isdir is not defined or dest_path_status.stat.isdir == False
+
+- name: Download {{ files.name|default('file') }} to {{ files.dest }}
+  get_url:
+    url: "{{ files.get_url }}"
+    dest: "{{ files.dest }}"
+    url_username: "{{ files.url_user|default('') }}"
+    url_password: "{{ files.url_pass|default('') }}"
+    owner: "{{ files.owner if files.owner is defined and files.owner else owner }}"
+    group: "{{ files.group if files.group is defined and files.group else group }}"
+    mode: "{{ files.mode if files.mode is defined and files.mode else '0640' }}"
+    force: "{{ files.force if files.force is defined and files.force else 'no' }}"
+    validate_certs: no

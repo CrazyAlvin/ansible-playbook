@@ -1,0 +1,5 @@
+---
+- include: "{{ task_file }}"
+  vars:
+    task_file: "{{ 'win_archive.yml' if ansible_os_family == 'Windows' else 'archive.yml' }}"
+  become: "{{ 'no' if ansible_os_family == 'Windows' else 'yes' }}"

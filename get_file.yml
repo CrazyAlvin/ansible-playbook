@@ -1,36 +1,7 @@
 ---
 - hosts: "{{ hosts }}"
-  become: yes
-  gather_facts: no
-  
-  vars: 
-    ## 全局设置，如果files变量未设置，则使用以下设置
-    url_user:
-    url_pass:
-    owner: root
-    group: root
-    mode: '0640'
-    force: no
-    files:
-#      - get_url:      ## 文件获取路径
-#        dest:         ## 文件保存路径（包含文件名）
-#        url_user:     ## 下载链接认证用户名
-#        url_pass:     ## 下载链接认证密码
-#        owner:        ## 文件拥有者
-#        group:        ## 文件属组
-#        mode:         ## 文件权限
-#        force:        ## 是否强制覆盖（yes/no）
-  
-  tasks:
-    - name: Download file to remote host by a url
-      get_url:
-        url: "{{ item.get_url }}"
-        dest: "{{ item.dest }}"
-        url_username: "{{ item.url_user if item.url_user is defined and item.url_user else url_user }}"
-        url_password: "{{ item.url_pass if item.url_pass is defined and item.url_pass else url_pass }}"
-        owner: "{{ item.owner if item.owner is defined and item.owner else owner }}"
-        group: "{{ item.group if item.group is defined and item.group else group }}"
-        mode: "{{ item.mode if item.mode is defined and item.mode else mode }}"
-        force: "{{ item.force if item.force is defined and item.force else force }}"
-        validate_certs: no
-      with_items: "{{ files }}"
+  become: no
+  gather_facts: yes
+
+  roles:
+    - get_file

@@ -1,0 +1,24 @@
+---
+- name: Get dest directory
+  win_shell: Split-Path {{ files.dest }}
+  register: dest_path
+
+- name: Check dest directory exists
+  win_stat:
+    path: "{{ dest_path.stdout_lines[0] }}"
+  register: dest_path_status
+
+- name: Create {{ dest_path.stdout }}
+  win_file:
+    dest: "{{ dest_path.stdout_lines[0] }}"
+    state: directory
+  when: dest_path_status.stat.isdir is not defined or dest_path_status.stat.isdir == False
+
+- name: Download {{ files.name|default('file') }} to {{ files.dest }}
+  win_get_url:
+    url: "{{ files.get_url }}"
+    dest: "{{ files.dest }}"
+    url_username: "{{ files.url_user|default('') }}"
+    url_password: "{{ files.url_pass|default('') }}"
+    force: yes
+    skip_certificate_validation: yes

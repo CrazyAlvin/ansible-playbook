@@ -4,13 +4,15 @@
   gather_facts: no
 
   vars:
+    owner: root
     cmd:
-    exec_dir: /tmp
-    exec_user: root
+      name:       ## 待执行命令【命令 + 参数】
+      path:       ## 执行目录
+      owner:      ## 执行用户
 
   tasks:
-    - name: Exec Command {{ cmd }}
-      command: "{{ cmd }}"
+    - name: Exec Command {{ cmd.name }}
+      shell: "{{ cmd.name }}"
       args:
-        chdir: "{{ exec_dir }}"
-      become_user: "{{ exec_user }}"
+        chdir: "{{ cmd.path }}"
+      become_user: "{{ cmd.owner if cmd.owner is defined and cmd.owner else owner }}"

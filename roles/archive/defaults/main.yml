@@ -1,0 +1,9 @@
+owner: root
+group: root
+#arch:
+#   path:             ## 待打包文件路径
+#   dest:             ## 打包文件保存路径（包含文件名）
+#   owner:            ## 文件拥有者
+#   group:            ## 文件属组
+#   extra_args:       ## 使用raw模式时可以添加 tar 命令支持的额外参数如 --exclude 等
+#   type: module      ## 打包方式（module/raw），module方式会忽略0字节的空文件

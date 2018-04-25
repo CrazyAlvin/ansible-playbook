@@ -1,0 +1,15 @@
+---
+- name: Archive specified folder
+  archive:
+    path: "{{ arch.path }}"
+    dest: "{{ arch.dest }}"
+    owner: "{{ arch.owner if arch.owner is defined and arch.owner else owner }}"
+    group: "{{ arch.group if arch.group is defined and arch.group else group }}"
+#  when: arch.type is defined and arch.type == 'module' or arch.type is not defined
+#
+#- name: Archive specified folder
+#  shell: tar -zcf {{ arch.dest }} ../$(basename {{ arch.path }}) {{ arch.extra_args|default('') }}
+#  args:
+#    chdir: "{{ arch.path }}"
+#  become_user: "{{ arch.owner if arch.owner is defined and arch.owner else owner }}"
+#  when: arch.type is defined and arch.type == 'raw'

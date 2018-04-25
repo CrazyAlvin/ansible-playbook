@@ -1,0 +1,8 @@
+owner: root       ## 执行该脚本的用户名
+#script:
+#  get_url:        ## 脚本下载链接
+#  type:           ## 脚本类型（bat，ps1，py...)
+#  args:           ## 脚本携带的参数
+#  url_user:       ## 下载链接认证用户名
+#  url_pass:       ## 下载链接认证密码
+#  owner:          ## 文件拥有者

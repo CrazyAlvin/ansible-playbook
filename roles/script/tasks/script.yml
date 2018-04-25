@@ -1,0 +1,28 @@
+---
+- name: Exec Script
+  block:
+    - name: Touch A Temp File
+      tempfile:
+        state: file
+      register: temp_file
+  
+    - name: Download Script File
+      get_url:
+        url: "{{ script.get_url }}"
+        dest: "{{ temp_file.path }}"
+        url_username: "{{ script.url_user|default('') }}"
+        url_password: "{{ script.url_pass|default('') }}"
+        owner: "{{ script.owner if script.owner is defined and script.owner else owner }}"
+        mode: 0500
+        force: yes
+        validate_certs: no
+  
+    - name: Exec Script On Remote Host
+      shell: "{{ 'nohup ' if script.nohup is defined else None }}{{ temp_file.path }} {{ script.args|default('') }}"
+      become_user: "{{ script.owner if script.owner is defined and script.owner else owner }}"
+  
+  always:
+    - name: Remove {{ temp_file.path }}
+      file: 
+        dest: "{{ temp_file.path }}"
+        state: absent

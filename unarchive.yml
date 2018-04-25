@@ -4,39 +4,37 @@
   gather_facts: no
   
   vars: 
-    files:
-      - src: test.tar.gz         ## 压缩包文件路径
-        dest: /tmp        ## 待解压目录
-        rm_path:          ## 需要事先删除的目录
-        create_path:      ## 需要创建的目录
-        owner:            ## 文件拥有者
-        group:            ## 文件属组
-    ## 全局设置，如果files未设置，则使用以下设置
     owner: root
     group: root
+    arch_type: module ## 打包方式（module/raw），module方式会忽略0字节的空文件
+
+    unarch:
+#      src:           ## 压缩包文件路径
+#      dest:          ## 待解压目录
+#      rm_path:       ## 需要事先删除的目录
+#      create_path:   ## 需要创建的目录
+#      owner:         ## 文件拥有者
+#      group:         ## 文件属组
   
   tasks:
-    - name: Remove specified folder
+    - name: Remove "{{ unarch.rm_path }}"
       file:
-        path: "{{ item.rm_path }}"
+        path: "{{ unarch.rm_path }}"
         state: absent
-      when: item.rm_path
+      when: unarch.rm_path is defined and unarch.rm_path
 
-    - name: Create specified folder
+    - name: Create "{{ unarch.create_path }}"
       file:
-        path: "{{ item.create_path }}"
-        owner: "{{ item.owner if item.owner else owner }}"
-        group: "{{ item.group if item.group else group }}"
+        path: "{{ unarch.create_path }}"
+        owner: "{{ unarch.owner if unarch.owner is defined and unarch.owner else owner }}"
+        group: "{{ unarch.group if unarch.group is defined and unarch.owner else group }}"
         recurse: yes
         state: directory
-      when: item.create_path
+      when: unarch.create_path is defined and unarch.create_path
 
-    - name: Unarchive {{ item.path }} to {{ item.dest }}
+    - name: Unarchive {{ unarch.src }} to {{ unarch.dest }}
       unarchive:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner if item.owner else owner }}"
-        group: "{{ item.group if item.group else group }}"
-
-## 待完成
-    with_items: "{{ files }}"
+        src: "{{ unarch.src }}"
+        dest: "{{ unarch.dest }}"
+        owner: "{{ unarch.owner if unarch.owner is defined and unarch.owner else owner }}"
+        group: "{{ unarch.group if unarch.group is defined and unarch.owner else group }}"

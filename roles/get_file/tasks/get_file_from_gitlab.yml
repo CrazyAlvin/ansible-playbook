@@ -1,0 +1,12 @@
+---
+- name: Download {{ files.name|default('file') }} to {{ files.dest }}
+  get_url:
+    url: "{{ base_url }}{{ item.project_id }}/repository/files/{{ item.file_path }}/raw?ref={{ item.branch if item.branch is defined and item.branch else branch }}"
+    dest: "{{ item.dest }}"
+    headers: "PRIVATE-TOKEN: {{ item.token if item.token else token }}"
+    owner: "{{ item.owner if item.owner is defined and item.owner else owner }}"
+    group: "{{ item.group if item.group is defined and item.group else group }}"
+    mode: "{{ item.mode if item.mode is defined and item.mode else mode }}"
+    force: "{{ item.force if item.force is defined and item.force else force }}"
+    validate_certs: no
+  with_items: "{{ files }}"
