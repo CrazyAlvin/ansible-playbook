@@ -9,7 +9,5 @@ group: root
 #unarch:
 #   src:           ## 压缩包文件路径
 #   dest:          ## 待解压目录
-#   rm_path:       ## 需要事先删除的目录
-#   create_path:   ## 需要创建的目录
 #   owner:         ## 文件拥有者
 #   group:         ## 文件属组

@@ -18,7 +18,7 @@
         validate_certs: no
   
     - name: Exec Script On Remote Host
-      shell: "{{ 'nohup ' if script.nohup is defined else None }}{{ temp_file.path }} {{ script.args|default('') }}"
+      shell: "{{ 'nohup ' if script.nohup is defined and ( script.nohup == 'yes' or script.nohup == True ) else None }}{{ temp_file.path }} {{ script.args|default('') }}"
       become_user: "{{ script.owner if script.owner is defined and script.owner else owner }}"
   
   always:

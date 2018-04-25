@@ -25,5 +25,5 @@
     owner: "{{ files.owner if files.owner is defined and files.owner else owner }}"
     group: "{{ files.group if files.group is defined and files.group else group }}"
     mode: "{{ files.mode if files.mode is defined and files.mode else '0640' }}"
-    force: "{{ files.force if files.force is defined and files.force else 'no' }}"
+    force: "{{ 'yes' if files.force is defined and ( files.force == 'yes' or files.force == True ) else 'no' }}"
     validate_certs: no
